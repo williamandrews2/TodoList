@@ -1,12 +1,26 @@
 import "./styles.css";
 
 import createToDo from "./modules/createTodo";
-import createProject from "./modules/project";
 import projectController from "./modules/projectController";
+import ui from "./modules/ui";
 
-const workProject = projectController.addProject("Work");
+// TESTING:
+// const workProject = projectController.addProject("Work");
+// const workProject2 = projectController.addProject("Work2");
+// const workProject3 = projectController.addProject("Work3");
 
-console.log(projectController.getAllProjects());
+const dashboardButton = document.getElementById("dashboard-btn");
+
+function showDashboard() {
+  ui.renderProjectList();
+  console.log("Showing dashboard and project list!");
+}
+
+function showProjects() {}
+
+function addTask() {}
+
+dashboardButton.addEventListener("click", showDashboard);
 
 // TODO: Create and load a default project here.
 
