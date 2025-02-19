@@ -2,6 +2,7 @@ import projectController from "./projectController";
 import { format } from "date-fns";
 import { parse } from "date-fns";
 import { isSameDay } from "date-fns";
+import addNewTask from "./addTask";
 
 const content = document.querySelector("#content");
 
@@ -105,7 +106,6 @@ const getTodosToday = () => {
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
       const todoDate = parse(todo.dueDate, "MM-dd-yyyy", new Date());
-      console.log(todoDate);
       return isSameDay(todoDate, today); // Check if due today
     });
 
@@ -142,9 +142,32 @@ const renderDashboard = () => {
   }
 };
 
+const addTask = () => {
+  content.innerHTML = "";
+  const template = document.getElementById("add-task-template");
+  const addTaskForm = template.content.cloneNode(true);
+  content.appendChild(addTaskForm);
+  const form = document.getElementById("add-task-form");
+  populateDropdown();
+  form.addEventListener("submit", addNewTask);
+}; // pick back up here, addTask function is not being called in the correct order.
+
+const populateDropdown = () => {
+  const projectSelect = document.getElementById("project-select");
+  projectSelect.innerHTML = "";
+  const projects = projectController.getAllProjects();
+  projects.forEach((project) => {
+    const option = document.createElement("option");
+    option.value = project.name;
+    option.textContent = project.name;
+    projectSelect.appendChild(option);
+  });
+};
+
 export default {
   renderProjectList,
   renderProject,
   renderTodos,
   renderDashboard,
+  addTask,
 };

@@ -52,7 +52,9 @@ function showProjects() {
   ui.renderProjectList();
 }
 
-function addTask() {}
+function addTask() {
+  ui.addTask();
+}
 
 dashboardButton.addEventListener("click", showDashboard);
 projectsButton.addEventListener("click", showProjects);
