@@ -1,6 +1,6 @@
 import projectController from "./projectController";
 import { format } from "date-fns";
-import { parse } from "date-fns";
+import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
 
@@ -105,7 +105,7 @@ const getTodosToday = () => {
   let dueTodayTodos = [];
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
-      const todoDate = parse(todo.dueDate, "MM-dd-yyyy", new Date());
+      const todoDate = parseISO(todo.dueDate);
       return isSameDay(todoDate, today); // Check if due today
     });
 

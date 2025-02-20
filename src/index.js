@@ -13,21 +13,21 @@ projectController.addProject("Work3");
 const todo1 = createToDo(
   "Go to work",
   "Arrive at work ready to work.",
-  "02-10-2025",
+  "2025-02-26",
   "Medium"
 );
 
 const todo2 = createToDo(
   "Go grocery shopping",
   "Purchase milk, eggs, and yogurt.",
-  "02-09-2025",
-  "Medium"
+  "2025-03-30",
+  "High"
 );
 
 const todo3 = createToDo(
   "Plan next vacation",
   "Create plans for this next year.",
-  "07-23-2025",
+  "2025-02-19",
   "Low"
 );
 
@@ -50,6 +50,7 @@ function showDashboard() {
 
 function showProjects() {
   ui.renderProjectList();
+  console.log(projectController.getAllProjects());
 }
 
 function addTask() {
