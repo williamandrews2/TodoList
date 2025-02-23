@@ -44,3 +44,8 @@ body {
 #content {
   width: 85vw;
 }
+
+.todo-complete {
+  text-decoration: line-through;
+  opacity: 0.6;
+}

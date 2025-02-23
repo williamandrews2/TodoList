@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
+import addNewProject from "./addProject";
 
 const content = document.querySelector("#content");
 
@@ -10,7 +11,7 @@ const renderProjectList = () => {
   content.innerHTML = "";
   createGreeting();
   const projectContainer = document.createElement("div");
-  projectContainer.id = "project-container"; // Potential change later.
+  projectContainer.id = "project-container";
   content.appendChild(projectContainer);
   const projectList = projectController.getAllProjects();
   projectList.forEach((project) => {
@@ -23,6 +24,11 @@ const renderProjectList = () => {
     projectListItem.innerHTML = `${project.name} (${project.todos.length} items)`;
     projectContainer.appendChild(projectListItem);
   });
+  const addProjectButton = document.createElement("button");
+  addProjectButton.id = "add-project-button";
+  addProjectButton.innerText = "Add new project";
+  addProjectButton.addEventListener("click", addProject);
+  projectContainer.appendChild(addProjectButton);
 };
 
 const renderProject = (name) => {
@@ -48,6 +54,14 @@ const renderTodos = () => {
       // todo item container
       const todoItem = document.createElement("div");
       todoItem.className = "todo-item";
+      // checkbox
+      const check = document.createElement("input");
+      check.type = "checkbox";
+      check.addEventListener("change", function () {
+        todoItem.classList.toggle("todo-complete", check.checked);
+        project.todos[i].completed = check.checked;
+      });
+      todoItem.appendChild(check);
       // title
       const title = document.createElement("h2");
       title.innerText = `${project.todos[i].title}`;
@@ -64,6 +78,11 @@ const renderTodos = () => {
       const priority = document.createElement("h4");
       priority.innerText = `Priority: ${project.todos[i].priority}`;
       todoItem.appendChild(priority);
+      // check if the task is already complete
+      if (project.todos[i].completed) {
+        todoItem.classList.add("todo-complete");
+        check.checked = true;
+      }
       // append to container
       todoItemContainer.appendChild(todoItem);
     }
@@ -92,8 +111,6 @@ const showBackButton = () => {
   content.appendChild(backButton);
   backButton.addEventListener("click", () => renderProjectList());
 };
-
-const getTotalTodos = () => {};
 
 const getCurrentDate = () => {
   return format(new Date(), "MM-dd-yyyy"); // Formats today's date as MM-DD-YYYY
@@ -150,7 +167,7 @@ const addTask = () => {
   const form = document.getElementById("add-task-form");
   populateDropdown();
   form.addEventListener("submit", addNewTask);
-}; // pick back up here, addTask function is not being called in the correct order.
+};
 
 const populateDropdown = () => {
   const projectSelect = document.getElementById("project-select");
@@ -162,6 +179,15 @@ const populateDropdown = () => {
     option.textContent = project.name;
     projectSelect.appendChild(option);
   });
+};
+
+const addProject = () => {
+  content.innerHTML = "";
+  const template = document.getElementById("add-project-template");
+  const addProjectForm = template.content.cloneNode(true);
+  content.appendChild(addProjectForm);
+  const form = document.getElementById("add-project-form");
+  form.addEventListener("submit", addNewProject);
 };
 
 export default {

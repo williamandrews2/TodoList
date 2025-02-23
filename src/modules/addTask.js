@@ -1,5 +1,6 @@
 import createToDo from "./createTodo";
 import projectController from "./projectController";
+import ui from "./ui";
 
 function addNewTask(event) {
   event.preventDefault();
@@ -8,11 +9,19 @@ function addNewTask(event) {
   const description = form.description.value;
   const dueDate = form.dueDate.value;
   const priority = form.priority.value;
+  const completed = false;
   const project = form.project.value;
 
+  // validate the form before processing
+  if (title.trim() == "") {
+    alert("Title must be filled out!");
+    return;
+  }
+
   // create todo and add it to the project that the user selected
-  const todo = createToDo(title, description, dueDate, priority);
+  const todo = createToDo(title, description, dueDate, priority, completed);
   projectController.getProject(project).addTodo(todo);
+  ui.renderProject(project);
 }
 
 export default addNewTask;
