@@ -29,7 +29,7 @@ const todo2 = createToDo(
 const todo3 = createToDo(
   "Plan next vacation",
   "Create plans for this next year.",
-  "2025-02-19",
+  "2025-02-23",
   "Low",
   false
 );

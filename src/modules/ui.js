@@ -78,6 +78,15 @@ const renderTodos = () => {
       const priority = document.createElement("h4");
       priority.innerText = `Priority: ${project.todos[i].priority}`;
       todoItem.appendChild(priority);
+      // delete button
+      const deleteButton = document.createElement("button");
+      deleteButton.innerText = "X";
+      deleteButton.addEventListener("click", function () {
+        project.removeTodo(i);
+        // clear page content and reload todos
+        renderProject(project.name);
+      });
+      todoItem.appendChild(deleteButton);
       // check if the task is already complete
       if (project.todos[i].completed) {
         todoItem.classList.add("todo-complete");
@@ -149,13 +158,39 @@ const renderDashboard = () => {
     noTodosToday.innerText = "No tasks due today!";
     content.appendChild(noTodosToday);
   } else {
-    const todoList = document.createElement("ul");
+    // create container for today's todos
+    const todaysTodos = document.createElement("div");
+    todaysTodos.id = "todays-todos";
+
+    // render each todo in the container
     dueTodayTodos.forEach((todo) => {
-      const todoItem = document.createElement("li");
-      todoItem.innerText = `${todo.title} - ${todo.description}`;
-      todoList.appendChild(todoItem);
+      // container div for single todo item
+      const todoItem = document.createElement("div");
+      todoItem.className = "todo-item";
+
+      // checkbox with event listener
+      const check = document.createElement("input");
+      check.type = "checkbox";
+      check.addEventListener("change", function () {
+        todoItem.classList.toggle("todo-complete", check.checked);
+        todo.completed = check.checked;
+      });
+      todoItem.appendChild(check);
+
+      // todo title and description
+      const text = document.createElement("div");
+      text.innerText = `${todo.title} - ${todo.description}`;
+      todoItem.appendChild(text);
+
+      // check if a todo has already been completed
+      if (todo.completed) {
+        todoItem.classList.add("todo-complete");
+        check.checked = true;
+      }
+
+      todaysTodos.appendChild(todoItem);
     });
-    content.appendChild(todoList);
+    content.appendChild(todaysTodos);
   }
 };
 
