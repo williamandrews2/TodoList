@@ -1,9 +1,9 @@
 import projectController from "./projectController";
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
-import addNewProject from "./addProject";
+import addNewProject from "./addNewProject";
 
 const content = document.querySelector("#content");
 
@@ -39,8 +39,15 @@ const renderProject = (name) => {
   const projectName = document.createElement("h1");
   projectName.innerText = name;
   content.appendChild(projectName);
-  // show project attributes
+  // show project todos
   renderTodos();
+  // delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "Delete project";
+  deleteButton.addEventListener("click", () => {
+    projectController.deleteProject(name);
+  });
+  content.appendChild(deleteButton);
 };
 
 const renderTodos = () => {

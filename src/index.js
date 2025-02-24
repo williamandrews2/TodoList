@@ -53,7 +53,6 @@ function showDashboard() {
 
 function showProjects() {
   ui.renderProjectList();
-  console.log(projectController.getAllProjects());
 }
 
 function addTask() {
