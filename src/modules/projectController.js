@@ -1,4 +1,5 @@
 import Project from "./project";
+import createSampleProject from "./sample";
 import ui from "./ui";
 
 let projects = []; // Store all projects here.
@@ -45,6 +46,10 @@ const fetchData = () => {
   if (storedProjects) {
     // Restore instances of projects from JSON
     projects = storedProjects.map(Project.fromJSON);
+  } else {
+    // If no data is found in locaStorage (new user), then
+    // create a sample project with sample data
+    createSampleProject();
   }
 };
 

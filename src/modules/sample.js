@@ -3,13 +3,13 @@ import createToDo from "./createTodo";
 
 const createSampleProject = () => {
   // TESTING:
-  projectController.addProject("Work");
+  projectController.addProject("Personal");
 
   const todo1 = createToDo(
     "Go to work",
-    "Arrive at work ready to work.",
-    "2025-02-26",
-    "Medium",
+    "Arrive at work at 7:45 AM.",
+    "2025-05-26",
+    "High",
     false
   );
 
@@ -17,21 +17,21 @@ const createSampleProject = () => {
     "Go grocery shopping",
     "Purchase milk, eggs, and yogurt.",
     "2025-03-30",
-    "High",
+    "Medium",
     false
   );
 
   const todo3 = createToDo(
     "Plan next vacation",
-    "Create plans for this next year.",
-    "2025-02-23",
+    "Create vacation plans for this next year.",
+    "2025-04-02",
     "Low",
     false
   );
 
-  projectController.getProject("Work").addTodo(todo1);
-  projectController.getProject("Work").addTodo(todo2);
-  projectController.getProject("Work").addTodo(todo3);
+  projectController.getProject("Personal").addTodo(todo1);
+  projectController.getProject("Personal").addTodo(todo2);
+  projectController.getProject("Personal").addTodo(todo3);
 };
 
 export default createSampleProject;
