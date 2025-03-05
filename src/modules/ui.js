@@ -37,12 +37,14 @@ const renderProject = (name) => {
   showBackButton();
   // show the title of the project
   const projectName = document.createElement("h1");
+  projectName.id = "project-name";
   projectName.innerText = name;
   content.appendChild(projectName);
   // show project todos
   renderTodos();
   // delete button
   const deleteButton = document.createElement("button");
+  deleteButton.id = "delete-project-button";
   deleteButton.innerText = "Delete project";
   deleteButton.addEventListener("click", () => {
     projectController.deleteProject(name);
@@ -63,6 +65,7 @@ const renderTodos = () => {
       todoItem.className = "todo-item";
       // checkbox
       const check = document.createElement("input");
+      check.className = "checkbox";
       check.type = "checkbox";
       check.addEventListener("change", function () {
         todoItem.classList.toggle("todo-complete", check.checked);
@@ -70,31 +73,61 @@ const renderTodos = () => {
         projectController.updateStorage();
       });
       todoItem.appendChild(check);
+
+      const todoContents = document.createElement("div");
+      todoContents.className = "todo-contents";
+
+      const mainTodoContents = document.createElement("div");
+      mainTodoContents.className = "main-todo-contents";
+      mainTodoContents.addEventListener("click", function () {
+        const expand = this.nextElementSibling;
+        expand.classList.toggle("hidden");
+      });
+
+      const secondaryTodoContents = document.createElement("div");
+      secondaryTodoContents.className = "secondary-todo-contents";
+      secondaryTodoContents.classList.add("hidden");
+
       // title
       const title = document.createElement("h2");
       title.innerText = `${project.todos[i].title}`;
-      todoItem.appendChild(title);
+      mainTodoContents.appendChild(title);
+
+      // due date
+      const dueDate = document.createElement("h4");
+      if (project.todos[i].dueDate == "") {
+        dueDate.innerText = "No due date";
+      } else {
+        dueDate.innerText = `${project.todos[i].dueDate}`;
+      }
+      mainTodoContents.appendChild(dueDate);
+
       // description
       const description = document.createElement("h4");
       description.innerText = `${project.todos[i].description}`;
-      todoItem.appendChild(description);
-      // due date
-      const dueDate = document.createElement("h4");
-      dueDate.innerText = `Due: ${project.todos[i].dueDate}`;
-      todoItem.appendChild(dueDate);
+      secondaryTodoContents.appendChild(description);
+
       // priority
       const priority = document.createElement("h4");
-      priority.innerText = `Priority: ${project.todos[i].priority}`;
-      todoItem.appendChild(priority);
+      priority.innerText = `${project.todos[i].priority} priority`;
+      secondaryTodoContents.appendChild(priority);
+
+      todoContents.appendChild(mainTodoContents);
+      todoContents.appendChild(secondaryTodoContents);
+
+      todoItem.appendChild(todoContents);
+
       // delete button
       const deleteButton = document.createElement("button");
       deleteButton.innerText = "X";
+      deleteButton.className = "delete-button";
       deleteButton.addEventListener("click", function () {
         project.removeTodo(i);
         // clear page content and reload todos
         renderProject(project.name);
       });
       todoItem.appendChild(deleteButton);
+
       // check if the task is already complete
       if (project.todos[i].completed) {
         todoItem.classList.add("todo-complete");
@@ -123,8 +156,8 @@ const showBackButton = () => {
   // This function returns to project page only. No
   // functionality for returning to another page yet.
   const backButton = document.createElement("button");
-  backButton.className = "button-style-1";
-  backButton.innerText = "Back to Projects";
+  backButton.className = "back-button";
+  backButton.innerText = "< Back to Projects";
   content.appendChild(backButton);
   backButton.addEventListener("click", () => renderProjectList());
 };

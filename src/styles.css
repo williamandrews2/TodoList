@@ -2,6 +2,7 @@
   --main-bg-color: rgb(22, 22, 22);
   --sidebar-color: rgb(12, 12, 12);
   --input-color: rgb(54, 54, 54);
+  --input-highlight: rgb(70, 70, 70);
   --border-color: rgb(3, 177, 177);
   --font-color: white;
   --font-size-primary: 1.5rem;
@@ -17,8 +18,13 @@ body {
   margin: 0px;
 }
 
-button {
+button,
+.checkbox {
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 
 #main-container {
@@ -64,7 +70,8 @@ button {
   align-items: center;
 }
 
-#greeting {
+#greeting,
+#project-name {
   padding-left: var(--indent);
 }
 
@@ -84,7 +91,7 @@ button {
   font-size: var(--font-size-primary);
   border-radius: 10px;
   background-color: var(--sidebar-color);
-  border: solid 1px var(--border-color);
+  border: solid 1px gray;
   color: white;
 }
 
@@ -124,4 +131,62 @@ button {
 
 #todays-tasks-heading {
   padding-left: var(--indent);
+}
+
+.back-button,
+#delete-project-button {
+  font-size: 1rem;
+  border: none;
+  margin: 10px 0px 0px 10px;
+  padding: 10px;
+  background-color: var(--input-color);
+  color: white;
+  border-radius: 10px;
+}
+
+.back-button:hover {
+  background-color: var(--input-highlight);
+}
+
+#todo-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo-item {
+  display: flex;
+  width: 90%;
+  padding-left: var(--indent);
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.todo-contents {
+  padding-left: var(--indent);
+  width: 80%;
+}
+
+.todo-contents h2 {
+  margin: 5px 0px;
+}
+
+.todo-contents h2:hover {
+  cursor: pointer;
+}
+
+.todo-contents h4 {
+  margin: 10px 0px;
+}
+
+.checkbox {
+  width: 30px;
+  height: 30px;
+  border-width: 0;
+}
+
+.delete-button {
+  width: 30px;
+  height: 30px;
 }
