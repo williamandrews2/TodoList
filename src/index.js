@@ -25,7 +25,6 @@ function addTask() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // createSampleProject();
   projectController.fetchData();
   showDashboard();
 });

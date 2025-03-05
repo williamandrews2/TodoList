@@ -21,12 +21,12 @@ const renderProjectList = () => {
       renderProject(project.name)
     );
     projectListItem.className = "project-list-item";
-    projectListItem.innerHTML = `${project.name} (${project.todos.length} items)`;
+    projectListItem.innerHTML = `${project.name} (${project.todos.length})`;
     projectContainer.appendChild(projectListItem);
   });
   const addProjectButton = document.createElement("button");
-  addProjectButton.id = "add-project-button";
-  addProjectButton.innerText = "Add new project";
+  addProjectButton.id = "new-project-button";
+  addProjectButton.innerText = "+ Add new project";
   addProjectButton.addEventListener("click", addProject);
   projectContainer.appendChild(addProjectButton);
 };
@@ -67,6 +67,7 @@ const renderTodos = () => {
       check.addEventListener("change", function () {
         todoItem.classList.toggle("todo-complete", check.checked);
         project.todos[i].completed = check.checked;
+        projectController.updateStorage();
       });
       todoItem.appendChild(check);
       // title
@@ -114,7 +115,7 @@ const renderTodos = () => {
 const createGreeting = () => {
   const greeting = document.createElement("h1");
   greeting.id = "greeting";
-  greeting.innerText = "Hello";
+  greeting.innerText = "Hello!";
   content.appendChild(greeting);
 };
 
@@ -156,12 +157,14 @@ const renderDashboard = () => {
   quoteContainer.innerText = `"What you do today can improve all your tomorrows." - Ralph Marston`;
   content.appendChild(quoteContainer);
   const today = document.createElement("h2");
+  today.id = "todays-tasks-heading";
   today.innerText = "Today's tasks";
   content.appendChild(today);
 
   const dueTodayTodos = getTodosToday();
   if (dueTodayTodos.length === 0) {
     const noTodosToday = document.createElement("div");
+    noTodosToday.id = "todays-todos";
     noTodosToday.innerText = "No tasks due today!";
     content.appendChild(noTodosToday);
   } else {
@@ -181,6 +184,7 @@ const renderDashboard = () => {
       check.addEventListener("change", function () {
         todoItem.classList.toggle("todo-complete", check.checked);
         todo.completed = check.checked;
+        projectController.updateStorage();
       });
       todoItem.appendChild(check);
 
