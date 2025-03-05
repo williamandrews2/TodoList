@@ -98,7 +98,11 @@ const renderTodos = () => {
       if (project.todos[i].dueDate == "") {
         dueDate.innerText = "No due date";
       } else {
-        dueDate.innerText = `${project.todos[i].dueDate}`;
+        const formattedDate = format(
+          project.todos[i].dueDate,
+          "MM-dd-yyyy"
+        ).replace(/-/g, "/");
+        dueDate.innerText = `${formattedDate}`;
       }
       mainTodoContents.appendChild(dueDate);
 
