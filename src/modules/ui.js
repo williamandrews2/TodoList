@@ -180,6 +180,9 @@ const createTodoElement = (todo, index, project = null) => {
   todoItem.className = "todo-item";
 
   // Checkbox
+  const checkboxWrapper = document.createElement("div");
+  checkboxWrapper.className = "checkbox-wrapper";
+
   const check = document.createElement("input");
   check.className = "checkbox";
   check.type = "checkbox";
@@ -189,7 +192,22 @@ const createTodoElement = (todo, index, project = null) => {
     todo.completed = check.checked;
     projectController.updateStorage();
   });
-  todoItem.appendChild(check);
+
+  // Generate a unique ID for the checkbox
+  const uniqueId = `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+  check.id = uniqueId;
+
+  const checkboxLabel = document.createElement("label");
+  checkboxLabel.setAttribute("for", uniqueId);
+
+  const tickMark = document.createElement("div");
+  tickMark.className = "tick-mark";
+  checkboxLabel.appendChild(tickMark);
+
+  checkboxWrapper.appendChild(check);
+  checkboxWrapper.appendChild(checkboxLabel);
+
+  todoItem.appendChild(checkboxWrapper);
 
   // Todo Contents
   const todoContents = document.createElement("div");

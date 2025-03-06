@@ -4,6 +4,7 @@
   --input-color: rgb(54, 54, 54);
   --input-highlight: rgb(70, 70, 70);
   --border-color: rgb(3, 177, 177);
+  --border-highlight-color: rgb(11, 255, 255);
   --font-color: white;
   --font-size-primary: 1.5rem;
   --indent: 20px;
@@ -55,6 +56,10 @@ button,
   color: var(--font-color);
 }
 
+.tab-button:hover {
+  background-color: var(--input-color);
+}
+
 #content {
   width: 85vw;
 }
@@ -95,6 +100,10 @@ button,
   color: white;
 }
 
+#new-project-button:hover {
+  border: 1px solid limegreen;
+}
+
 #add-project-form {
   font-size: var(--font-size-primary);
   padding: 0px var(--indent);
@@ -133,6 +142,7 @@ button,
 
 #todays-tasks-heading {
   padding-left: var(--indent);
+  margin: 35px 0px;
 }
 
 .back-button,
@@ -148,6 +158,10 @@ button,
 
 .back-button:hover {
   background-color: var(--input-highlight);
+}
+
+#delete-project-button:hover {
+  background-color: rgb(173, 3, 3);
 }
 
 #todo-item-container {
@@ -166,6 +180,12 @@ button,
   border-radius: 10px;
 }
 
+.todo-item:hover,
+.project-list-item:hover {
+  border: 1px solid var(--border-highlight-color);
+  cursor: pointer;
+}
+
 .todo-contents {
   padding-left: var(--indent);
   width: 85%;
@@ -175,19 +195,9 @@ button,
   margin: 5px 0px;
 }
 
-.todo-contents h2:hover {
-  cursor: pointer;
-}
-
 .todo-contents h4 {
   margin: 10px 0px;
   font-weight: lighter;
-}
-
-.checkbox {
-  width: 30px;
-  height: 30px;
-  border-width: 0;
 }
 
 .delete-button {

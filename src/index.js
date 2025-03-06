@@ -1,4 +1,5 @@
 import "./styles.css";
+import "./checkbox.css";
 
 import projectController from "./modules/projectController";
 import ui from "./modules/ui";
