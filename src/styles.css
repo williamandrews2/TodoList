@@ -107,7 +107,8 @@ button,
   border: none;
 }
 
-#add-project-button {
+#add-project-button,
+#add-task-button {
   font-size: var(--font-size-primary);
   border-radius: 10px;
   border: none;
@@ -115,7 +116,8 @@ button,
   color: white;
 }
 
-#add-project-heading {
+#add-project-heading,
+#add-task-title {
   padding-left: var(--indent);
 }
 
@@ -191,4 +193,35 @@ button,
 .delete-button {
   width: 30px;
   height: 30px;
+}
+
+#add-task-form {
+  padding-left: var(--indent);
+}
+
+#add-task-form label {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+#add-task-form label,
+#add-task-form input,
+#add-task-form select {
+  display: block;
+}
+
+#add-task-form input,
+select,
+textarea {
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background-color: var(--input-color);
+  color: white;
+}
+
+#add-task-form #description {
+  height: 5rem;
+  width: 60%;
 }

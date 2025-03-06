@@ -54,96 +54,18 @@ const renderProject = (name) => {
 
 const renderTodos = () => {
   const project = projectController.getCurrentProject();
-  let numTodos = project.todos.length; // number of todos in the current project
-  if (numTodos != 0) {
+
+  if (project.todos.length > 0) {
     const todoItemContainer = document.createElement("div");
     todoItemContainer.id = "todo-item-container";
     content.appendChild(todoItemContainer);
-    for (let i = 0; i < numTodos; i++) {
-      // todo item container
-      const todoItem = document.createElement("div");
-      todoItem.className = "todo-item";
-      // checkbox
-      const check = document.createElement("input");
-      check.className = "checkbox";
-      check.type = "checkbox";
-      check.addEventListener("change", function () {
-        todoItem.classList.toggle("todo-complete", check.checked);
-        project.todos[i].completed = check.checked;
-        projectController.updateStorage();
-      });
-      todoItem.appendChild(check);
 
-      const todoContents = document.createElement("div");
-      todoContents.className = "todo-contents";
-
-      const mainTodoContents = document.createElement("div");
-      mainTodoContents.className = "main-todo-contents";
-      mainTodoContents.addEventListener("click", function () {
-        const expand = this.nextElementSibling;
-        expand.classList.toggle("hidden");
-      });
-
-      const secondaryTodoContents = document.createElement("div");
-      secondaryTodoContents.className = "secondary-todo-contents";
-      secondaryTodoContents.classList.add("hidden");
-
-      // title
-      const title = document.createElement("h2");
-      title.innerText = `${project.todos[i].title}`;
-      mainTodoContents.appendChild(title);
-
-      // due date
-      const dueDate = document.createElement("h4");
-      if (project.todos[i].dueDate == "") {
-        dueDate.innerText = "No due date";
-      } else {
-        const formattedDate = format(
-          project.todos[i].dueDate,
-          "MM-dd-yyyy"
-        ).replace(/-/g, "/");
-        dueDate.innerText = `${formattedDate}`;
-      }
-      mainTodoContents.appendChild(dueDate);
-
-      // description
-      const description = document.createElement("h4");
-      description.innerText = `${project.todos[i].description}`;
-      secondaryTodoContents.appendChild(description);
-
-      // priority
-      const priority = document.createElement("h4");
-      priority.innerText = `${project.todos[i].priority} priority`;
-      secondaryTodoContents.appendChild(priority);
-
-      todoContents.appendChild(mainTodoContents);
-      todoContents.appendChild(secondaryTodoContents);
-
-      todoItem.appendChild(todoContents);
-
-      // delete button
-      const deleteButton = document.createElement("button");
-      deleteButton.innerText = "X";
-      deleteButton.className = "delete-button";
-      deleteButton.addEventListener("click", function () {
-        project.removeTodo(i);
-        // clear page content and reload todos
-        renderProject(project.name);
-      });
-      todoItem.appendChild(deleteButton);
-
-      // check if the task is already complete
-      if (project.todos[i].completed) {
-        todoItem.classList.add("todo-complete");
-        check.checked = true;
-      }
-      // append to container
-      todoItemContainer.appendChild(todoItem);
-    }
+    project.todos.forEach((todo, index) => {
+      todoItemContainer.appendChild(createTodoElement(todo, index, project));
+    });
   } else {
     const noTodoMessage = document.createElement("h3");
     noTodoMessage.innerText = "No todos yet!";
-    // add link/button here to create the user's first todo.
     content.appendChild(noTodoMessage);
   }
 };
@@ -188,11 +110,14 @@ const getTodosToday = () => {
 const renderDashboard = () => {
   content.innerHTML = "";
   createGreeting();
-  // create a random quote selector here.
+
+  // quote
   const quoteContainer = document.createElement("div");
   quoteContainer.id = "quote-container";
   quoteContainer.innerText = `"What you do today can improve all your tomorrows." - Ralph Marston`;
   content.appendChild(quoteContainer);
+
+  // today's tasks
   const today = document.createElement("h2");
   today.id = "todays-tasks-heading";
   today.innerText = "Today's tasks";
@@ -211,33 +136,9 @@ const renderDashboard = () => {
 
     // render each todo in the container
     dueTodayTodos.forEach((todo) => {
-      // container div for single todo item
-      const todoItem = document.createElement("div");
-      todoItem.className = "todo-item";
-
-      // checkbox with event listener
-      const check = document.createElement("input");
-      check.type = "checkbox";
-      check.addEventListener("change", function () {
-        todoItem.classList.toggle("todo-complete", check.checked);
-        todo.completed = check.checked;
-        projectController.updateStorage();
-      });
-      todoItem.appendChild(check);
-
-      // todo title and description
-      const text = document.createElement("div");
-      text.innerText = `${todo.title} - ${todo.description}`;
-      todoItem.appendChild(text);
-
-      // check if a todo has already been completed
-      if (todo.completed) {
-        todoItem.classList.add("todo-complete");
-        check.checked = true;
-      }
-
-      todaysTodos.appendChild(todoItem);
+      todaysTodos.appendChild(createTodoElement(todo));
     });
+
     content.appendChild(todaysTodos);
   }
 };
@@ -271,6 +172,79 @@ const addProject = () => {
   content.appendChild(addProjectForm);
   const form = document.getElementById("add-project-form");
   form.addEventListener("submit", addNewProject);
+};
+
+const createTodoElement = (todo, index, project = null) => {
+  // Todo item container
+  const todoItem = document.createElement("div");
+  todoItem.className = "todo-item";
+
+  // Checkbox
+  const check = document.createElement("input");
+  check.className = "checkbox";
+  check.type = "checkbox";
+  check.checked = todo.completed;
+  check.addEventListener("change", function () {
+    todoItem.classList.toggle("todo-complete", check.checked);
+    todo.completed = check.checked;
+    projectController.updateStorage();
+  });
+  todoItem.appendChild(check);
+
+  // Todo Contents
+  const todoContents = document.createElement("div");
+  todoContents.className = "todo-contents";
+
+  const mainTodoContents = document.createElement("div");
+  mainTodoContents.className = "main-todo-contents";
+  mainTodoContents.addEventListener("click", function () {
+    const expand = this.nextElementSibling;
+    expand.classList.toggle("hidden");
+  });
+
+  const secondaryTodoContents = document.createElement("div");
+  secondaryTodoContents.className = "secondary-todo-contents hidden";
+
+  // Title
+  const title = document.createElement("h2");
+  title.innerText = todo.title;
+  mainTodoContents.appendChild(title);
+
+  // Due Date
+  const dueDate = document.createElement("h4");
+  dueDate.innerText = todo.dueDate
+    ? format(todo.dueDate, "MM/dd/yyyy")
+    : "No due date";
+  mainTodoContents.appendChild(dueDate);
+
+  // Description
+  const description = document.createElement("h4");
+  description.innerText = todo.description;
+  secondaryTodoContents.appendChild(description);
+
+  // Priority
+  const priority = document.createElement("h4");
+  priority.innerText = `${todo.priority} priority`;
+  secondaryTodoContents.appendChild(priority);
+
+  // Append all contents
+  todoContents.appendChild(mainTodoContents);
+  todoContents.appendChild(secondaryTodoContents);
+  todoItem.appendChild(todoContents);
+
+  // Delete Button (Only when viewing a project, not the dashboard)
+  if (project) {
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "X";
+    deleteButton.className = "delete-button";
+    deleteButton.addEventListener("click", function () {
+      project.removeTodo(index);
+      renderProject(project.name);
+    });
+    todoItem.appendChild(deleteButton);
+  }
+
+  return todoItem;
 };
 
 export default {
