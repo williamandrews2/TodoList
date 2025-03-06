@@ -6,6 +6,7 @@ If you are reading this, hello! Yes, this is another todo list. While some peopl
 
 ## Known issues and todos (haha)
 
-- Make the page mobile friendly!
+- Make the page mobile-friendly!
 - Ability to edit pre-existing tasks.
 - Ability to sort todos by the date or priority.
+- Move completed todos to the bottom.
