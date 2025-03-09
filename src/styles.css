@@ -1,13 +1,4 @@
 :root {
-  --main-bg-color: rgb(22, 22, 22);
-  --sidebar-color: rgb(12, 12, 12);
-  --input-color: rgb(54, 54, 54);
-  --input-highlight: rgb(70, 70, 70);
-  --border-color: rgb(3, 177, 177);
-  --border-highlight-color: rgb(11, 255, 255);
-  --font-color: white;
-  --font-size-primary: 1.5rem;
-  --indent: 20px;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -54,10 +45,12 @@ button,
   border-radius: 10px;
   background-color: var(--main-bg-color);
   color: var(--font-color);
+  transition: 0.2s ease-in-out;
 }
 
 .tab-button:hover {
   background-color: var(--input-color);
+  transition: 0.2s ease-in-out;
 }
 
 #content {
@@ -89,6 +82,7 @@ button,
   color: white;
   padding: 10px 0px;
   margin-bottom: 12px;
+  transition: 0.2s ease-in-out;
 }
 
 #new-project-button {
@@ -98,6 +92,7 @@ button,
   background-color: var(--sidebar-color);
   border: solid 1px gray;
   color: white;
+  transition: 0.2s ease-in-out;
 }
 
 #new-project-button:hover {
@@ -158,6 +153,7 @@ button,
 
 .back-button:hover {
   background-color: var(--input-highlight);
+  transition: 0.2s ease-in-out;
 }
 
 #delete-project-button:hover {
@@ -178,6 +174,7 @@ button,
   margin-bottom: 20px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
+  transition: 0.2s ease-in-out;
 }
 
 .todo-item:hover,
@@ -201,8 +198,22 @@ button,
 }
 
 .delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.delete-button svg {
   width: 30px;
   height: 30px;
+  color: gray; /* Change color */
+  transition: 0.2s ease-in-out;
+}
+
+.delete-button:hover svg {
+  color: red;
+  transform: scale(1.1);
 }
 
 #add-task-form {

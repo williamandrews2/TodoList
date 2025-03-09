@@ -253,7 +253,50 @@ const createTodoElement = (todo, index, project = null) => {
   // Delete Button (Only when viewing a project, not the dashboard)
   if (project) {
     const deleteButton = document.createElement("button");
-    deleteButton.innerText = "X";
+
+    // Trash can icon SVG
+    const trashIcon = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "svg"
+    );
+    trashIcon.setAttribute("width", "24");
+    trashIcon.setAttribute("height", "24");
+    trashIcon.setAttribute("viewBox", "0 0 24 24");
+    trashIcon.setAttribute("fill", "none");
+    trashIcon.setAttribute("stroke", "currentColor");
+    trashIcon.setAttribute("stroke-width", "2");
+    trashIcon.setAttribute("stroke-linecap", "round");
+    trashIcon.setAttribute("stroke-linejoin", "round");
+
+    // Create SVG paths
+    const polyline = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "polyline"
+    );
+    polyline.setAttribute("points", "3 6 5 6 21 6");
+
+    const path1 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+    path1.setAttribute(
+      "d",
+      "M19 6L17.5 21.5C17.4 22.3 16.7 23 15.8 23H8.2C7.3 23 6.6 22.3 6.5 21.5L5 6M10 11V17M14 11V17"
+    );
+
+    const path2 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+    path2.setAttribute("d", "M8 6V3H16V6");
+
+    // Append paths to SVG
+    trashIcon.appendChild(polyline);
+    trashIcon.appendChild(path1);
+    trashIcon.appendChild(path2);
+
+    deleteButton.appendChild(trashIcon);
+
     deleteButton.className = "delete-button";
     deleteButton.addEventListener("click", function () {
       project.removeTodo(index);

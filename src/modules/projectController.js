@@ -40,7 +40,6 @@ const getCurrentProject = () => currentProject;
 const getAllProjects = () => projects;
 const updateStorage = () => {
   localStorage.setItem("projects", JSON.stringify(projects));
-  console.log("storage updated!");
 };
 const fetchData = () => {
   const storedProjects = JSON.parse(localStorage.getItem("projects"));
