@@ -24,6 +24,8 @@ button,
   color: var(--font-color);
 }
 
+/* sidebar */
+
 #sidebar {
   background-color: var(--sidebar-color);
   padding: 0px 20px;
@@ -52,6 +54,22 @@ button,
   background-color: var(--input-color);
   transition: 0.2s ease-in-out;
 }
+
+#nav-container{
+  position: absolute;
+  display: none;
+  top: 15px;
+  right: 20px;    
+}
+
+#hamburger{  
+  font-size: 30px;
+  border: none;
+  color: var(--font-color);
+  background-color: var(--sidebar-color);  
+}
+
+/* main page content */
 
 #content {
   width: 85vw;
@@ -180,12 +198,12 @@ button,
   transition: 0.2s ease-in-out;
 }
 
-.overdue-todo-item {
-  border: 1px solid var(--overdue-color) !important;
+.todo-item.overdue-todo-item {
+  border: 1px solid var(--overdue-color);
 }
 
-.overdue-todo-item:hover {
-  border: 1px solid var(--overdue-highlight-color) !important;
+.todo-item.overdue-todo-item:hover {
+  border: 1px solid var(--overdue-highlight-color);
 }
 
 .todo-item:hover,
@@ -256,4 +274,56 @@ textarea {
 #add-task-form #description {
   height: 5rem;
   width: 60%;
+}
+
+@media (max-width: 768px) {
+  #main-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #sidebar {
+    width: 100vw;
+    min-height: 10vh;        
+    align-items: center;
+  } 
+
+  #sidebar h1 {
+    margin-bottom: 0px;
+  }
+
+  #tab-button-container {    
+     display: none;
+     flex-direction: column;   
+     margin: 10px 0px;       
+  }
+
+  .tab-button{
+    margin: 8px 0px;
+    width: 80vw;
+  }
+
+  #nav-container{
+    display: block;
+  }
+
+  #tab-button-container.menu-open{
+    display: flex;    
+  }
+
+  .dashboard-item-heading, #greeting, #quote-container {
+    padding-left: 0px;
+  }
+
+  .dashboard-todos {
+    padding-left: 0px;
+  }
+
+  #project-name{
+    padding-left: 0px;
+  }
+
+  .back-button, #delete-project-button {
+    margin-left: 0px;
+  }
 }

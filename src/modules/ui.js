@@ -338,10 +338,17 @@ const createTodoElement = (todo, index, project = null) => {
   return todoItem;
 };
 
+const toggleNav = () => {
+  const hamburger = document.getElementById("hamburger");
+  const menu = document.getElementById("tab-button-container");
+  menu.classList.toggle("menu-open");
+}
+
 export default {
   renderProjectList,
   renderProject,
   renderTodos,
   renderDashboard,
   addTask,
+  toggleNav,
 };

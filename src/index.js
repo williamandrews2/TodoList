@@ -9,10 +9,14 @@ import createSampleProject from "./modules/sample";
 const dashboardButton = document.getElementById("dashboard-btn");
 const projectsButton = document.getElementById("projects-btn");
 const addTaskButton = document.getElementById("add-task-btn");
+const hamburger = document.getElementById("hamburger");
 
 dashboardButton.addEventListener("click", showDashboard);
 projectsButton.addEventListener("click", showProjects);
 addTaskButton.addEventListener("click", addTask);
+hamburger.addEventListener("click", () => {
+  ui.toggleNav();
+});
 
 function showDashboard() {
   ui.renderDashboard();

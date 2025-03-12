@@ -18,7 +18,7 @@ class Project {
     projectController.updateStorage();
   }
 
-  // Method to reconstruct project from JSON
+  // Method to reconstruct project from JSON  
   static fromJSON(data) {
     const project = new Project(data.name);
     project.todos = data.todos || [];
