@@ -104,6 +104,10 @@ const getDashboardTodos = (todoType) => {
         return isSameDay(todoDate, today); // Check if due today
       }
       if (todoType === "overdue") {
+        if (todo.completed) {
+          // do not render overdue todos that are already complete
+          return false;
+        }
         return isBefore(todoDate, today); // Check if overdue
       }
       if (todoType === "upcoming") {
@@ -158,13 +162,8 @@ const renderDashboard = () => {
   quoteContainer.innerText = `"What you do today can improve all your tomorrows." - Ralph Marston`;
   content.appendChild(quoteContainer);
 
-  // check for today's tasks
   renderTodoSection("today", getDashboardTodos("today"));
-
-  // check for overdue todos
   renderTodoSection("overdue", getDashboardTodos("overdue"));
-
-  // check for all upcoming tasks for the future
   renderTodoSection("upcoming", getDashboardTodos("upcoming"));
 };
 
@@ -212,6 +211,12 @@ const createTodoElement = (todo, index, project = null) => {
   check.className = "checkbox";
   check.type = "checkbox";
   check.checked = todo.completed;
+
+  // Apply class on initial render
+  if (todo.completed) {
+    todoItem.classList.add("todo-complete");
+  }
+
   check.addEventListener("change", function () {
     todoItem.classList.toggle("todo-complete", check.checked);
     todo.completed = check.checked;
