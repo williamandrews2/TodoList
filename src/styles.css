@@ -293,9 +293,13 @@ textarea {
   }
 
   #tab-button-container {    
-     display: none;
-     flex-direction: column;   
-     margin: 10px 0px;       
+  text-align: center;
+  opacity: 0;
+  max-height: 0; /* Initially collapsed */
+  overflow: hidden; /* Prevents content from spilling */
+  transform: translateY(-10px); /* Slight upward position for slide effect */
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
 
   .tab-button{
@@ -308,7 +312,10 @@ textarea {
   }
 
   #tab-button-container.menu-open{
-    display: flex;    
+    opacity: 1;
+  max-height: 500px; /* Adjust based on your menu height */
+  transform: translateY(0);
+  visibility: visible;   
   }
 
   .dashboard-item-heading, #greeting, #quote-container {
