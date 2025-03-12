@@ -93,49 +93,59 @@ const getCurrentDate = () => {
   return format(new Date(), "MM-dd-yyyy"); // Formats today's date as MM-DD-YYYY
 };
 
-const getTodosToday = () => {
-  const allProjects = projectController.getAllProjects();
+const getDashboardTodos = (todoType) => {
   const today = getCurrentDate();
-  let dueTodayTodos = [];
+  const allProjects = projectController.getAllProjects();
+  let dashboardTodos = [];
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
       const todoDate = parseISO(todo.dueDate);
-      return isSameDay(todoDate, today); // Check if due today
+      if (todoType === "today") {
+        return isSameDay(todoDate, today); // Check if due today
+      }
+      if (todoType === "overdue") {
+        return isBefore(todoDate, today); // Check if overdue
+      }
+      if (todoType === "upcoming") {
+        return isAfter(todoDate, today); // Check if upcoming
+      }
     });
 
-    dueTodayTodos = dueTodayTodos.concat(filteredTodos);
+    // look into using flatMap instead of forEach and concat...
+    dashboardTodos = dashboardTodos.concat(filteredTodos);
   });
-  return dueTodayTodos;
+  return dashboardTodos;
 };
 
-const getTodosOverdue = () => {
-  const today = getCurrentDate();
-  const allProjects = projectController.getAllProjects();
-  let overdueTodos = [];
-  allProjects.forEach((project) => {
-    const filteredTodos = project.todos.filter((todo) => {
-      const todoDate = parseISO(todo.dueDate);
-      return isBefore(todoDate, today); // Check if overdue
+const renderTodoSection = (section, todos) => {
+  if (todos.length != 0) {
+    // create heading (text filled below)
+    const heading = document.createElement("h1");
+    heading.className = "dashboard-item-heading";
+    if (section === "today") {
+      heading.innerText = "Today's todos";
+    }
+    if (section === "overdue") {
+      heading.innerText = "Overdue todos";
+    }
+    if (section === "upcoming") {
+      heading.innerText = "Upcoming todos";
+    }
+
+    // create a container and render each todo in the section
+    const todoSection = document.createElement("div");
+    todoSection.className = "dashboard-todos";
+    todos.forEach((todo) => {
+      const todoItem = createTodoElement(todo);
+      if (section === "overdue") {
+        todoItem.classList.add("overdue-todo-item");
+      }
+      todoSection.appendChild(todoItem);
     });
 
-    overdueTodos = overdueTodos.concat(filteredTodos);
-  });
-  return overdueTodos;
-};
-
-const getUpcomingTodos = () => {
-  const today = getCurrentDate();
-  const allProjects = projectController.getAllProjects();
-  let upcomingTodos = [];
-  allProjects.forEach((project) => {
-    const filteredTodos = project.todos.filter((todo) => {
-      const todoDate = parseISO(todo.dueDate);
-      return isAfter(todoDate, today); // Check if upcoming
-    });
-
-    upcomingTodos = upcomingTodos.concat(filteredTodos);
-  });
-  return upcomingTodos;
+    content.appendChild(heading);
+    content.appendChild(todoSection);
+  }
 };
 
 const renderDashboard = () => {
@@ -149,68 +159,13 @@ const renderDashboard = () => {
   content.appendChild(quoteContainer);
 
   // check for today's tasks
-  const dueTodayTodos = getTodosToday();
-  if (dueTodayTodos.length != 0) {
-    // create heading
-    const today = document.createElement("h1");
-    today.className = "dashboard-item-heading";
-    today.innerText = "Today's todos";
-    content.appendChild(today);
-
-    // create container for today's todos
-    const todaysTodos = document.createElement("div");
-    todaysTodos.className = "dashboard-todos";
-
-    // render each todo in the container
-    dueTodayTodos.forEach((todo) => {
-      todaysTodos.appendChild(createTodoElement(todo));
-    });
-
-    content.appendChild(todaysTodos);
-  }
+  renderTodoSection("today", getDashboardTodos("today"));
 
   // check for overdue todos
-  const overdueTodos = getTodosOverdue();
-  if (overdueTodos.length != 0) {
-    // create the heading:
-    const overdue = document.createElement("h1");
-    overdue.className = "dashboard-item-heading";
-    overdue.innerText = "Overdue todos";
-    content.appendChild(overdue);
+  renderTodoSection("overdue", getDashboardTodos("overdue"));
 
-    // create container and render overdue todos
-    const overdueTodoContainer = document.createElement("div");
-    overdueTodoContainer.className = "dashboard-todos";
-
-    overdueTodos.forEach((todo) => {
-      const todoItem = createTodoElement(todo);
-      todoItem.classList.add("overdue-todo-item");
-      overdueTodoContainer.appendChild(todoItem);
-    });
-
-    content.appendChild(overdueTodoContainer);
-  }
-
-  // Show all upcoming tasks for the future
-  const upcomingTodos = getUpcomingTodos();
-  if (upcomingTodos.length != 0) {
-    //create the heading:
-    const upcoming = document.createElement("h1");
-    upcoming.className = "dashboard-item-heading";
-    upcoming.innerText = "Upcoming todos";
-    content.appendChild(upcoming);
-
-    // create container and render the upcoming todos
-    const upcomingTodoContainer = document.createElement("div");
-    upcomingTodoContainer.className = "dashboard-todos";
-
-    upcomingTodos.forEach((todo) => {
-      const todoItem = createTodoElement(todo);
-      upcomingTodoContainer.appendChild(todoItem);
-    });
-
-    content.appendChild(upcomingTodoContainer);
-  }
+  // check for all upcoming tasks for the future
+  renderTodoSection("upcoming", getDashboardTodos("upcoming"));
 };
 
 const addTask = () => {
