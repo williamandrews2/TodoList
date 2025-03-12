@@ -69,7 +69,8 @@ button,
 }
 
 #greeting,
-#project-name {
+#project-name,
+#project-no-todos {
   padding-left: var(--indent);
 }
 
@@ -102,6 +103,7 @@ button,
 #add-project-form {
   font-size: var(--font-size-primary);
   padding: 0px var(--indent);
+  color: var(--font-color);
 }
 
 #add-project-form #title {
@@ -109,6 +111,7 @@ button,
   border-radius: 10px;
   background-color: var(--input-color);
   border: none;
+  color: var(--font-color);
 }
 
 #add-project-button,

@@ -1,5 +1,5 @@
 import projectController from "./projectController";
-import { add, format, isBefore } from "date-fns";
+import { add, format, isBefore, isAfter } from "date-fns";
 import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
@@ -64,7 +64,8 @@ const renderTodos = () => {
       todoItemContainer.appendChild(createTodoElement(todo, index, project));
     });
   } else {
-    const noTodoMessage = document.createElement("h3");
+    const noTodoMessage = document.createElement("div");
+    noTodoMessage.id = "project-no-todos";
     noTodoMessage.innerText = "No todos yet!";
     content.appendChild(noTodoMessage);
   }
@@ -122,30 +123,40 @@ const getTodosOverdue = () => {
   return overdueTodos;
 };
 
+const getUpcomingTodos = () => {
+  const today = getCurrentDate();
+  const allProjects = projectController.getAllProjects();
+  let upcomingTodos = [];
+  allProjects.forEach((project) => {
+    const filteredTodos = project.todos.filter((todo) => {
+      const todoDate = parseISO(todo.dueDate);
+      return isAfter(todoDate, today); // Check if upcoming
+    });
+
+    upcomingTodos = upcomingTodos.concat(filteredTodos);
+  });
+  return upcomingTodos;
+};
+
 const renderDashboard = () => {
   content.innerHTML = "";
   createGreeting();
 
-  // quote
+  // quote heading
   const quoteContainer = document.createElement("div");
   quoteContainer.id = "quote-container";
   quoteContainer.innerText = `"What you do today can improve all your tomorrows." - Ralph Marston`;
   content.appendChild(quoteContainer);
 
-  // today's tasks
-  const today = document.createElement("h1");
-  today.className = "dashboard-item-heading";
-  today.innerText = "Today's tasks";
-  content.appendChild(today);
-
+  // check for today's tasks
   const dueTodayTodos = getTodosToday();
+  if (dueTodayTodos.length != 0) {
+    // create heading
+    const today = document.createElement("h1");
+    today.className = "dashboard-item-heading";
+    today.innerText = "Today's todos";
+    content.appendChild(today);
 
-  if (dueTodayTodos.length === 0) {
-    const noTodosToday = document.createElement("h3");
-    noTodosToday.className = "dashboard-todos";
-    noTodosToday.innerText = "No tasks due today!";
-    content.appendChild(noTodosToday);
-  } else {
     // create container for today's todos
     const todaysTodos = document.createElement("div");
     todaysTodos.className = "dashboard-todos";
@@ -158,25 +169,19 @@ const renderDashboard = () => {
     content.appendChild(todaysTodos);
   }
 
-  // overdue todos
-  const overdue = document.createElement("h1");
-  overdue.className = "dashboard-item-heading";
-  overdue.innerText = "Overdue tasks";
-  content.appendChild(overdue);
-
+  // check for overdue todos
   const overdueTodos = getTodosOverdue();
+  if (overdueTodos.length != 0) {
+    // create the heading:
+    const overdue = document.createElement("h1");
+    overdue.className = "dashboard-item-heading";
+    overdue.innerText = "Overdue todos";
+    content.appendChild(overdue);
 
-  if (overdueTodos.length === 0) {
-    const noOverdueTodos = document.createElement("div");
-    noOverdueTodos.className = "dashboard-todos";
-    noOverdueTodos.innerText = "No tasks due today!";
-    content.appendChild(noOverdueTodos);
-  } else {
-    // create container for today's todos
+    // create container and render overdue todos
     const overdueTodoContainer = document.createElement("div");
     overdueTodoContainer.className = "dashboard-todos";
 
-    // render each todo in the container
     overdueTodos.forEach((todo) => {
       const todoItem = createTodoElement(todo);
       todoItem.classList.add("overdue-todo-item");
@@ -184,6 +189,27 @@ const renderDashboard = () => {
     });
 
     content.appendChild(overdueTodoContainer);
+  }
+
+  // Show all upcoming tasks for the future
+  const upcomingTodos = getUpcomingTodos();
+  if (upcomingTodos.length != 0) {
+    //create the heading:
+    const upcoming = document.createElement("h1");
+    upcoming.className = "dashboard-item-heading";
+    upcoming.innerText = "Upcoming todos";
+    content.appendChild(upcoming);
+
+    // create container and render the upcoming todos
+    const upcomingTodoContainer = document.createElement("div");
+    upcomingTodoContainer.className = "dashboard-todos";
+
+    upcomingTodos.forEach((todo) => {
+      const todoItem = createTodoElement(todo);
+      upcomingTodoContainer.appendChild(todoItem);
+    });
+
+    content.appendChild(upcomingTodoContainer);
   }
 };
 
