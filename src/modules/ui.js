@@ -1,5 +1,5 @@
 import projectController from "./projectController";
-import { add, format } from "date-fns";
+import { add, format, isBefore } from "date-fns";
 import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
@@ -107,6 +107,21 @@ const getTodosToday = () => {
   return dueTodayTodos;
 };
 
+const getTodosOverdue = () => {
+  const today = getCurrentDate();
+  const allProjects = projectController.getAllProjects();
+  let overdueTodos = [];
+  allProjects.forEach((project) => {
+    const filteredTodos = project.todos.filter((todo) => {
+      const todoDate = parseISO(todo.dueDate);
+      return isBefore(todoDate, today); // Check if overdue
+    });
+
+    overdueTodos = overdueTodos.concat(filteredTodos);
+  });
+  return overdueTodos;
+};
+
 const renderDashboard = () => {
   content.innerHTML = "";
   createGreeting();
@@ -118,21 +133,22 @@ const renderDashboard = () => {
   content.appendChild(quoteContainer);
 
   // today's tasks
-  const today = document.createElement("h2");
-  today.id = "todays-tasks-heading";
+  const today = document.createElement("h1");
+  today.className = "dashboard-item-heading";
   today.innerText = "Today's tasks";
   content.appendChild(today);
 
   const dueTodayTodos = getTodosToday();
+
   if (dueTodayTodos.length === 0) {
-    const noTodosToday = document.createElement("div");
-    noTodosToday.id = "todays-todos";
+    const noTodosToday = document.createElement("h3");
+    noTodosToday.className = "dashboard-todos";
     noTodosToday.innerText = "No tasks due today!";
     content.appendChild(noTodosToday);
   } else {
     // create container for today's todos
     const todaysTodos = document.createElement("div");
-    todaysTodos.id = "todays-todos";
+    todaysTodos.className = "dashboard-todos";
 
     // render each todo in the container
     dueTodayTodos.forEach((todo) => {
@@ -140,6 +156,34 @@ const renderDashboard = () => {
     });
 
     content.appendChild(todaysTodos);
+  }
+
+  // overdue todos
+  const overdue = document.createElement("h1");
+  overdue.className = "dashboard-item-heading";
+  overdue.innerText = "Overdue tasks";
+  content.appendChild(overdue);
+
+  const overdueTodos = getTodosOverdue();
+
+  if (overdueTodos.length === 0) {
+    const noOverdueTodos = document.createElement("div");
+    noOverdueTodos.className = "dashboard-todos";
+    noOverdueTodos.innerText = "No tasks due today!";
+    content.appendChild(noOverdueTodos);
+  } else {
+    // create container for today's todos
+    const overdueTodoContainer = document.createElement("div");
+    overdueTodoContainer.className = "dashboard-todos";
+
+    // render each todo in the container
+    overdueTodos.forEach((todo) => {
+      const todoItem = createTodoElement(todo);
+      todoItem.classList.add("overdue-todo-item");
+      overdueTodoContainer.appendChild(todoItem);
+    });
+
+    content.appendChild(overdueTodoContainer);
   }
 };
 
@@ -177,7 +221,7 @@ const addProject = () => {
 const createTodoElement = (todo, index, project = null) => {
   // Todo item container
   const todoItem = document.createElement("div");
-  todoItem.className = "todo-item";
+  todoItem.classList.add("todo-item");
 
   // Checkbox
   const checkboxWrapper = document.createElement("div");

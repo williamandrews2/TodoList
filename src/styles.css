@@ -126,16 +126,16 @@ button,
 }
 
 #quote-container {
-  padding-left: 20px;
+  padding-left: var(--sub-indent);
   font-style: italic;
   font-size: 1.1rem;
 }
 
-#todays-todos {
-  padding-left: var(--indent);
+.dashboard-todos {
+  padding-left: var(--sub-indent);
 }
 
-#todays-tasks-heading {
+.dashboard-item-heading {
   padding-left: var(--indent);
   margin: 35px 0px;
 }
@@ -175,6 +175,14 @@ button,
   border: 1px solid var(--border-color);
   border-radius: 10px;
   transition: 0.2s ease-in-out;
+}
+
+.overdue-todo-item {
+  border: 1px solid var(--overdue-color) !important;
+}
+
+.overdue-todo-item:hover {
+  border: 1px solid var(--overdue-highlight-color) !important;
 }
 
 .todo-item:hover,
