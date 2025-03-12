@@ -32,5 +32,5 @@ function addTask() {
 
 document.addEventListener("DOMContentLoaded", () => {
   projectController.fetchData();
-  showDashboard();
+  showDashboard(); 
 });
