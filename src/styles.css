@@ -365,4 +365,8 @@ textarea {
   #delete-project-button {
     margin-left: 0px;
   }
+  #add-project-form input,
+  #add-project-button {
+    margin-top: 15px;
+  }
 }

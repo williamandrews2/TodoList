@@ -102,7 +102,7 @@ const getDashboardTodos = (todoType) => {
   let dashboardTodos = [];
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
-      const todoDate = parseISO(todo.dueDate);
+      const todoDate = parseDate(todo.dueDate);
       if (todoType === "today") {
         return isSameDay(todoDate, today); // Check if due today
       }
@@ -210,6 +210,9 @@ const createTodoElement = (todo, index, project = null) => {
   const todoItem = document.createElement("div");
   todoItem.classList.add("todo-item");
 
+  // Parsing the due date
+  const parsedDate = parseDate(todo.dueDate);
+
   // add the proper priority styling
   if (todo.priority === "High") {
     todoItem.classList.add("high-priority");
@@ -219,7 +222,7 @@ const createTodoElement = (todo, index, project = null) => {
     todoItem.classList.add("medium-priority");
   }
 
-  if (isBefore(todo.dueDate, getCurrentDate())) {
+  if (isBefore(parsedDate, getCurrentDate())) {
     todoItem.classList.add("overdue-todo-item");
   }
 
@@ -281,7 +284,7 @@ const createTodoElement = (todo, index, project = null) => {
   // Due Date
   const dueDate = document.createElement("h4");
   dueDate.innerText = todo.dueDate
-    ? format(todo.dueDate, "MM/dd/yyyy")
+    ? format(parsedDate, "MM/dd/yyyy")
     : "No due date";
   mainTodoContents.appendChild(dueDate);
 
@@ -367,6 +370,13 @@ const toggleNav = () => {
 const closeNav = () => {
   const menu = document.getElementById("tab-button-container");
   menu.classList.remove("menu-open");
+};
+
+const parseDate = (date) => {
+  // Function will return date whether there is one or not!
+  const [year, month, day] = date.split("-").map(Number);
+  const parsedDate = new Date(year, month - 1, day); // Month is 0-based
+  return parsedDate;
 };
 
 export default {
