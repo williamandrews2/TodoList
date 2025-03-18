@@ -8,6 +8,9 @@ import addNewProject from "./addNewProject";
 const content = document.querySelector("#content");
 
 const renderProjectList = () => {
+  // close the menu if on mobile
+  closeNav();
+
   content.innerHTML = "";
   createGreeting();
   const projectContainer = document.createElement("div");
@@ -153,6 +156,10 @@ const renderTodoSection = (section, todos) => {
 };
 
 const renderDashboard = () => {
+  // close the menu if on mobile
+  closeNav();
+
+  // clear the page
   content.innerHTML = "";
   createGreeting();
 
@@ -168,6 +175,9 @@ const renderDashboard = () => {
 };
 
 const addTask = () => {
+  // close the menu if on mobile
+  closeNav();
+
   content.innerHTML = "";
   const template = document.getElementById("add-task-template");
   const addTaskForm = template.content.cloneNode(true);
@@ -342,7 +352,12 @@ const toggleNav = () => {
   const hamburger = document.getElementById("hamburger");
   const menu = document.getElementById("tab-button-container");
   menu.classList.toggle("menu-open");
-}
+};
+
+const closeNav = () => {
+  const menu = document.getElementById("tab-button-container");
+  menu.classList.remove("menu-open");
+};
 
 export default {
   renderProjectList,

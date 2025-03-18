@@ -55,18 +55,18 @@ button,
   transition: 0.2s ease-in-out;
 }
 
-#nav-container{
+#nav-container {
   position: absolute;
   display: none;
   top: 15px;
-  right: 20px;    
+  right: 20px;
 }
 
-#hamburger{  
+#hamburger {
   font-size: 30px;
   border: none;
   color: var(--font-color);
-  background-color: var(--sidebar-color);  
+  background-color: var(--sidebar-color);
 }
 
 /* main page content */
@@ -284,41 +284,52 @@ textarea {
 
   #sidebar {
     width: 100vw;
-    min-height: 10vh;        
+    min-height: 80px;
     align-items: center;
-  } 
+  }
 
   #sidebar h1 {
     margin-bottom: 0px;
   }
 
-  #tab-button-container {    
-  text-align: center;
-  opacity: 0;
-  max-height: 0; /* Initially collapsed */
-  overflow: hidden; /* Prevents content from spilling */
-  transform: translateY(-10px); /* Slight upward position for slide effect */
-  visibility: hidden;
-  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out, transform 0.3s ease-in-out;
+  #tab-button-container {
+    text-align: center;
+    position: absolute;
+    top: 80px;
+    opacity: 0;
+    max-height: 0; /* Initially collapsed */
+    overflow: hidden; /* Prevents content from spilling */
+    transform: translateY(-10px); /* Slight upward position for slide effect */
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out,
+      transform 0.3s ease-in-out;
+    padding: 10px 0px 20px 0px;
+    background: linear-gradient(
+      to bottom,
+      var(--sidebar-color),
+      rgba(12, 12, 12, 0.8)
+    );
   }
 
-  .tab-button{
+  .tab-button {
     margin: 8px 0px;
     width: 80vw;
   }
 
-  #nav-container{
+  #nav-container {
     display: block;
   }
 
-  #tab-button-container.menu-open{
+  #tab-button-container.menu-open {
     opacity: 1;
-  max-height: 500px; /* Adjust based on your menu height */
-  transform: translateY(0);
-  visibility: visible;   
+    max-height: 500px; /* Adjust based on your menu height */
+    transform: translateY(0);
+    visibility: visible;
   }
 
-  .dashboard-item-heading, #greeting, #quote-container {
+  .dashboard-item-heading,
+  #greeting,
+  #quote-container {
     padding-left: 0px;
   }
 
@@ -326,11 +337,12 @@ textarea {
     padding-left: 0px;
   }
 
-  #project-name{
+  #project-name {
     padding-left: 0px;
   }
 
-  .back-button, #delete-project-button {
+  .back-button,
+  #delete-project-button {
     margin-left: 0px;
   }
 }

@@ -32,5 +32,15 @@ function addTask() {
 
 document.addEventListener("DOMContentLoaded", () => {
   projectController.fetchData();
-  showDashboard(); 
+  showDashboard();
+});
+
+document.addEventListener("click", (event) => {
+  const menu = document.getElementById("tab-button-container");
+  const hamburger = document.getElementById("hamburger");
+
+  // check if the click is outside the menu and the hamburger button
+  if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+    menu.classList.remove("menu-open");
+  }
 });
