@@ -3,10 +3,14 @@
   --sidebar-color: rgb(12, 12, 12);
   --input-color: rgb(54, 54, 54);
   --input-highlight: rgb(70, 70, 70);
-  --border-color: rgb(3, 177, 177);
-  --border-highlight-color: rgb(11, 255, 255);
+  --border-color: rgb(3, 177, 12);
+  --border-highlight-color: rgb(52, 255, 11);
   --overdue-color: rgb(139, 1, 1);
   --overdue-highlight-color: red;
+  --high-priority: rgb(152, 155, 4);
+  --high-priority-highlight: rgb(251, 255, 0);
+  --medium-priority: rgb(0, 126, 199);
+  --medium-priority-highlight: rgb(0, 153, 255);
   --font-color: white;
   --font-size-primary: 1.5rem;
   --indent: 20px;

@@ -206,6 +206,22 @@ button,
   border: 1px solid var(--overdue-highlight-color);
 }
 
+.todo-item.high-priority {
+  border: 1px solid var(--high-priority);
+}
+
+.todo-item.high-priority:hover {
+  border: 1px solid var(--high-priority-highlight);
+}
+
+.todo-item.medium-priority {
+  border: 1px solid var(--medium-priority);
+}
+
+.todo-item.medium-priority:hover {
+  border: 1px solid var(--medium-priority-highlight);
+}
+
 .todo-item:hover,
 .project-list-item:hover {
   border: 1px solid var(--border-highlight-color);

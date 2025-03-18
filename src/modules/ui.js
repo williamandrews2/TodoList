@@ -144,9 +144,6 @@ const renderTodoSection = (section, todos) => {
     todoSection.className = "dashboard-todos";
     todos.forEach((todo) => {
       const todoItem = createTodoElement(todo);
-      if (section === "overdue") {
-        todoItem.classList.add("overdue-todo-item");
-      }
       todoSection.appendChild(todoItem);
     });
 
@@ -212,6 +209,19 @@ const createTodoElement = (todo, index, project = null) => {
   // Todo item container
   const todoItem = document.createElement("div");
   todoItem.classList.add("todo-item");
+
+  // add the proper priority styling
+  if (todo.priority === "High") {
+    todoItem.classList.add("high-priority");
+  }
+
+  if (todo.priority === "Medium") {
+    todoItem.classList.add("medium-priority");
+  }
+
+  if (isBefore(todo.dueDate, getCurrentDate())) {
+    todoItem.classList.add("overdue-todo-item");
+  }
 
   // Checkbox
   const checkboxWrapper = document.createElement("div");
