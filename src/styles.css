@@ -333,6 +333,10 @@ textarea {
     padding-left: 0px;
   }
 
+  #quote-container {
+    text-align: center;
+  }
+
   .dashboard-todos {
     padding-left: 0px;
   }
