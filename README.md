@@ -9,3 +9,7 @@ If you are reading this, hello! Yes, this is another todo list. While some peopl
 - Ability to edit pre-existing tasks.
 - Ability to sort todos by the date or priority.
 - Move completed todos to the bottom.
+
+## Live preview
+
+A live preview of this project can be viewed [here](https://williamandrews2.github.io/TodoList/).
