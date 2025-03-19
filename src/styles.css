@@ -199,11 +199,11 @@ button,
 }
 
 .todo-item.overdue-todo-item {
-  border: 1px solid var(--overdue-color);
+  border: 1px solid var(--overdue-color) !important;
 }
 
 .todo-item.overdue-todo-item:hover {
-  border: 1px solid var(--overdue-highlight-color);
+  border: 1px solid var(--overdue-highlight-color) !important;
 }
 
 .todo-item.high-priority {

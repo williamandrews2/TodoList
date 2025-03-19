@@ -1,5 +1,5 @@
 import projectController from "./projectController";
-import { add, format, isBefore, isAfter } from "date-fns";
+import { add, format, isBefore, isAfter, parse } from "date-fns";
 import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
@@ -93,16 +93,22 @@ const showBackButton = () => {
 };
 
 const getCurrentDate = () => {
-  return format(new Date(), "MM-dd-yyyy"); // Formats today's date as MM-DD-YYYY
+  return format(new Date(), "MM-dd-yyy"); // Formats today's date as MM-DD-YYYY
 };
 
 const getDashboardTodos = (todoType) => {
-  const today = getCurrentDate();
+  const today = new Date();
   const allProjects = projectController.getAllProjects();
   let dashboardTodos = [];
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
       const todoDate = parseDate(todo.dueDate);
+
+      // safeguard for todos without a due date (invalid date)
+      if (isNaN(todoDate.getTime())) {
+        console.error("Invalid todoDate:", todo.dueDate);
+        return false;
+      }
 
       if (todoType === "today") {
         return isSameDay(todoDate, today); // Check if due today
@@ -126,19 +132,7 @@ const getDashboardTodos = (todoType) => {
 };
 
 const renderTodoSection = (section, todos) => {
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-  const test1 = document.createElement("div");
-  test1.innerText = `Before for loop. Section: ${section}; todos ${todos}`;
-  content.appendChild(test1);
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-
   if (todos.length != 0) {
-    //------------------------BRUTE FORCE DEBUGGING--------------------
-    const test2 = document.createElement("div");
-    test2.innerText = "Before if statements";
-    content.appendChild(test2);
-    //------------------------BRUTE FORCE DEBUGGING--------------------
-
     // create heading (text filled below)
     const heading = document.createElement("h1");
     heading.className = "dashboard-item-heading";
@@ -152,22 +146,10 @@ const renderTodoSection = (section, todos) => {
       heading.innerText = "Upcoming todos";
     }
 
-    //------------------------BRUTE FORCE DEBUGGING--------------------
-    const test3 = document.createElement("div");
-    test3.innerText = "After if statements. Before creating the container.";
-    content.appendChild(test3);
-    //------------------------BRUTE FORCE DEBUGGING--------------------
-
     // create a container and render each todo in the section
     const todoSection = document.createElement("div");
     todoSection.className = "dashboard-todos";
     todos.forEach((todo) => {
-      //------------------------BRUTE FORCE DEBUGGING--------------------
-      const test4 = document.createElement("div");
-      test4.innerText = "Iterating through the loop";
-      content.appendChild(test4);
-      //------------------------BRUTE FORCE DEBUGGING--------------------
-
       const todoItem = createTodoElement(todo);
       todoSection.appendChild(todoItem);
     });
