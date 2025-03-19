@@ -93,20 +93,21 @@ const showBackButton = () => {
 };
 
 const getCurrentDate = () => {
-  return format(new Date(), "MM-dd-yyy"); // Formats today's date as MM-DD-YYYY
+  return format(new Date(), "yyyy-MM-dd"); // Formats today's date as MM-DD-YYYY
 };
 
 const getDashboardTodos = (todoType) => {
-  const today = new Date();
+  const today = getCurrentDate();
   const allProjects = projectController.getAllProjects();
   let dashboardTodos = [];
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
-      const todoDate = parseDate(todo.dueDate);
+      const todoDate = todo.dueDate;
 
       // safeguard for todos without a due date (invalid date)
-      if (isNaN(todoDate.getTime())) {
-        console.error("Invalid todoDate:", todo.dueDate);
+      if (todo.dueDate === "") {
+        // isNaN(todoDate.getTime())
+        // console.error("Invalid todoDate:", todo.dueDate);
         return false;
       }
 
@@ -118,6 +119,10 @@ const getDashboardTodos = (todoType) => {
           // do not render overdue todos that are already complete
           return false;
         }
+        console.log(todoDate);
+        console.log(today);
+        console.log(todo.dueDate);
+        console.log("------------");
         return isBefore(todoDate, today); // Check if overdue
       }
       if (todoType === "upcoming") {
@@ -290,23 +295,23 @@ const createTodoElement = (todo, index, project = null) => {
 
   // Due Date
   const dueDate = document.createElement("h4");
-  // dueDate.innerText = todo.dueDate
-  //   ? format(parsedDate, "MM/dd/yyyy")
-  //   : "No due date";
+  dueDate.innerText = todo.dueDate
+    ? format(parsedDate, "MM/dd/yyyy")
+    : "No due date";
   //---
-  try {
-    console.log(`Rendering todo with date:`, todo.dueDate);
+  // try {
+  //   console.log(`Rendering todo with date:`, todo.dueDate);
 
-    const parsedDate = parseDate(todo.dueDate); // Use your parseDate function
-    console.log(`Parsed Date:`, parsedDate);
+  //   const parsedDate = parseDate(todo.dueDate); // Use your parseDate function
+  //   console.log(`Parsed Date:`, parsedDate);
 
-    dueDate.innerText = parsedDate
-      ? format(parsedDate, "MM/dd/yyyy")
-      : "No due date";
-  } catch (error) {
-    console.error("Error formatting date:", error);
-    dueDate.innerText = "Error formatting date";
-  }
+  //   dueDate.innerText = parsedDate
+  //     ? format(parsedDate, "MM/dd/yyyy")
+  //     : "No due date";
+  // } catch (error) {
+  //   console.error("Error formatting date:", error);
+  //   dueDate.innerText = "Error formatting date";
+  // }
   //---
   mainTodoContents.appendChild(dueDate);
 
