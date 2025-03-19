@@ -177,12 +177,25 @@ const renderDashboard = () => {
 
   //------------------------BRUTE FORCE DEBUGGING--------------------
   const test2 = document.createElement("div");
-  test2.innerText = "After calling render section";
+  test2.innerText = "After calling render section 1";
   content.appendChild(test2);
   //------------------------BRUTE FORCE DEBUGGING--------------------
 
   renderTodoSection("overdue", getDashboardTodos("overdue"));
+
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test3 = document.createElement("div");
+  test3.innerText = "After calling render section 2";
+  content.appendChild(test3);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+
   renderTodoSection("upcoming", getDashboardTodos("upcoming"));
+
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test4 = document.createElement("div");
+  test4.innerText = "After calling render section 3";
+  content.appendChild(test4);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
 };
 
 const addTask = () => {
