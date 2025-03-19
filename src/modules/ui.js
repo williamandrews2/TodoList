@@ -1,5 +1,5 @@
 import projectController from "./projectController";
-import { add, format, isBefore, isAfter, parse } from "date-fns";
+import { add, format, isBefore, isAfter, parse, parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
 import addNewProject from "./addNewProject";
@@ -292,8 +292,8 @@ const createTodoElement = (todo, index, project = null) => {
   // Due Date
   const dueDate = document.createElement("h4");
   dueDate.innerText = todo.dueDate
-    ? format(todo.dueDate, "MM/dd/yyyy")
-    : "No due date";
+    ? format(parseISO(todo.dueDate), "MM/dd/yyyy")
+    : "No due date";        
   mainTodoContents.appendChild(dueDate);
 
   // Description
