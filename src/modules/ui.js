@@ -126,7 +126,19 @@ const getDashboardTodos = (todoType) => {
 };
 
 const renderTodoSection = (section, todos) => {
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test1 = document.createElement("div");
+  test1.innerText = `Before for loop. Section: ${section}; todos ${todos}`;
+  content.appendChild(test1);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+
   if (todos.length != 0) {
+    //------------------------BRUTE FORCE DEBUGGING--------------------
+    const test2 = document.createElement("div");
+    test2.innerText = "Before if statements";
+    content.appendChild(test2);
+    //------------------------BRUTE FORCE DEBUGGING--------------------
+
     // create heading (text filled below)
     const heading = document.createElement("h1");
     heading.className = "dashboard-item-heading";
@@ -140,10 +152,22 @@ const renderTodoSection = (section, todos) => {
       heading.innerText = "Upcoming todos";
     }
 
+    //------------------------BRUTE FORCE DEBUGGING--------------------
+    const test3 = document.createElement("div");
+    test3.innerText = "After if statements. Before creating the container.";
+    content.appendChild(test3);
+    //------------------------BRUTE FORCE DEBUGGING--------------------
+
     // create a container and render each todo in the section
     const todoSection = document.createElement("div");
     todoSection.className = "dashboard-todos";
     todos.forEach((todo) => {
+      //------------------------BRUTE FORCE DEBUGGING--------------------
+      const test4 = document.createElement("div");
+      test4.innerText = "Iterating through the loop";
+      content.appendChild(test4);
+      //------------------------BRUTE FORCE DEBUGGING--------------------
+
       const todoItem = createTodoElement(todo);
       todoSection.appendChild(todoItem);
     });
@@ -167,35 +191,9 @@ const renderDashboard = () => {
   quoteContainer.innerText = `"What you do today can improve all your tomorrows." - Ralph Marston`;
   content.appendChild(quoteContainer);
 
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-  const test1 = document.createElement("div");
-  test1.innerText = "Before calling render todo section";
-  content.appendChild(test1);
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-
   renderTodoSection("today", getDashboardTodos("today"));
-
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-  const test2 = document.createElement("div");
-  test2.innerText = "After calling render section 1";
-  content.appendChild(test2);
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-
   renderTodoSection("overdue", getDashboardTodos("overdue"));
-
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-  const test3 = document.createElement("div");
-  test3.innerText = "After calling render section 2";
-  content.appendChild(test3);
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-
   renderTodoSection("upcoming", getDashboardTodos("upcoming"));
-
-  //------------------------BRUTE FORCE DEBUGGING--------------------
-  const test4 = document.createElement("div");
-  test4.innerText = "After calling render section 3";
-  content.appendChild(test4);
-  //------------------------BRUTE FORCE DEBUGGING--------------------
 };
 
 const addTask = () => {
