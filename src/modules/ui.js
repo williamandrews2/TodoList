@@ -103,6 +103,7 @@ const getDashboardTodos = (todoType) => {
   allProjects.forEach((project) => {
     const filteredTodos = project.todos.filter((todo) => {
       const todoDate = parseDate(todo.dueDate);
+
       if (todoType === "today") {
         return isSameDay(todoDate, today); // Check if due today
       }
@@ -283,9 +284,23 @@ const createTodoElement = (todo, index, project = null) => {
 
   // Due Date
   const dueDate = document.createElement("h4");
-  dueDate.innerText = todo.dueDate
-    ? format(parsedDate, "MM/dd/yyyy")
-    : "No due date";
+  // dueDate.innerText = todo.dueDate
+  //   ? format(parsedDate, "MM/dd/yyyy")
+  //   : "No due date";
+  try {
+    console.log(`Rendering todo with date:`, todo.dueDate);
+
+    const parsedDate = parseDate(todo.dueDate); // Use your parseDate function
+    console.log(`Parsed Date:`, parsedDate);
+
+    dueDate.innerText = parsedDate
+      ? format(parsedDate, "MM/dd/yyyy")
+      : "No due date";
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    dueDate.innerText = "Error formatting date";
+  }
+  //---
   mainTodoContents.appendChild(dueDate);
 
   // Description
