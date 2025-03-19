@@ -18,6 +18,14 @@ hamburger.addEventListener("click", () => {
   ui.toggleNav();
 });
 
+// DEBUGGING
+window.onerror = function (message, source, lineno, colno, error) {
+  document.body.innerHTML += `<p style="color:red;">Error: ${message} at ${source}:${lineno}:${colno}</p>`;
+};
+console.log = function (message) {
+  document.body.innerHTML += `<p style="color:blue;">Log: ${message}</p>`;
+};
+
 function showDashboard() {
   ui.renderDashboard();
 }
