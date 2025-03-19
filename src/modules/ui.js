@@ -214,6 +214,12 @@ const createTodoElement = (todo, index, project = null) => {
   // Parsing the due date
   const parsedDate = parseDate(todo.dueDate);
 
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test1 = document.createElement("div");
+  test1.innerText = "Date parsed";
+  content.appendChild(test1);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+
   // add the proper priority styling
   if (todo.priority === "High") {
     todoItem.classList.add("high-priority");
@@ -223,9 +229,21 @@ const createTodoElement = (todo, index, project = null) => {
     todoItem.classList.add("medium-priority");
   }
 
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test5 = document.createElement("div");
+  test5.innerText = "Passed priority checking";
+  content.appendChild(test5);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+
   if (isBefore(parsedDate, getCurrentDate())) {
     todoItem.classList.add("overdue-todo-item");
   }
+
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test2 = document.createElement("div");
+  test2.innerText = "Passed if statements";
+  content.appendChild(test2);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
 
   // Checkbox
   const checkboxWrapper = document.createElement("div");
@@ -274,6 +292,12 @@ const createTodoElement = (todo, index, project = null) => {
     expand.classList.toggle("hidden");
   });
 
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test4 = document.createElement("div");
+  test4.innerText = "Passed adding event listener";
+  content.appendChild(test4);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+
   const secondaryTodoContents = document.createElement("div");
   secondaryTodoContents.className = "secondary-todo-contents hidden";
 
@@ -282,11 +306,18 @@ const createTodoElement = (todo, index, project = null) => {
   title.innerText = todo.title;
   mainTodoContents.appendChild(title);
 
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+  const test3 = document.createElement("div");
+  test3.innerText = "Title rendered";
+  content.appendChild(test3);
+  //------------------------BRUTE FORCE DEBUGGING--------------------
+
   // Due Date
   const dueDate = document.createElement("h4");
   // dueDate.innerText = todo.dueDate
   //   ? format(parsedDate, "MM/dd/yyyy")
   //   : "No due date";
+  //---
   try {
     console.log(`Rendering todo with date:`, todo.dueDate);
 
