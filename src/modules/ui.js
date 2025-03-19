@@ -1,6 +1,5 @@
 import projectController from "./projectController";
 import { add, format, isBefore, isAfter, parse } from "date-fns";
-import { parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
 import addNewProject from "./addNewProject";
@@ -93,7 +92,7 @@ const showBackButton = () => {
 };
 
 const getCurrentDate = () => {
-  return format(new Date(), "yyyy-MM-dd"); // Formats today's date as MM-DD-YYYY
+  return format(new Date(), "yyyy-MM-dd");
 };
 
 const getDashboardTodos = (todoType) => {
@@ -106,26 +105,26 @@ const getDashboardTodos = (todoType) => {
 
       // safeguard for todos without a due date (invalid date)
       if (todo.dueDate === "") {
-        // isNaN(todoDate.getTime())
-        // console.error("Invalid todoDate:", todo.dueDate);
         return false;
       }
 
       if (todoType === "today") {
-        return isSameDay(todoDate, today); // Check if due today
-      }
-      if (todoType === "overdue") {
         if (todo.completed) {
           // do not render overdue todos that are already complete
           return false;
         }
-        console.log(todoDate);
-        console.log(today);
-        console.log(todo.dueDate);
-        console.log("------------");
+        return isSameDay(todoDate, today); // Check if due today
+      }
+      if (todoType === "overdue") {
+        if (todo.completed) {
+          return false;
+        }
         return isBefore(todoDate, today); // Check if overdue
       }
       if (todoType === "upcoming") {
+        if (todo.completed) {
+          return false;
+        }
         return isAfter(todoDate, today); // Check if upcoming
       }
     });
@@ -222,9 +221,6 @@ const createTodoElement = (todo, index, project = null) => {
   const todoItem = document.createElement("div");
   todoItem.classList.add("todo-item");
 
-  // Parsing the due date
-  const parsedDate = parseDate(todo.dueDate);
-
   // add the proper priority styling
   if (todo.priority === "High") {
     todoItem.classList.add("high-priority");
@@ -234,7 +230,7 @@ const createTodoElement = (todo, index, project = null) => {
     todoItem.classList.add("medium-priority");
   }
 
-  if (isBefore(parsedDate, getCurrentDate())) {
+  if (isBefore(todo.dueDate, getCurrentDate())) {
     todoItem.classList.add("overdue-todo-item");
   }
 
@@ -296,23 +292,8 @@ const createTodoElement = (todo, index, project = null) => {
   // Due Date
   const dueDate = document.createElement("h4");
   dueDate.innerText = todo.dueDate
-    ? format(parsedDate, "MM/dd/yyyy")
+    ? format(todo.dueDate, "MM/dd/yyyy")
     : "No due date";
-  //---
-  // try {
-  //   console.log(`Rendering todo with date:`, todo.dueDate);
-
-  //   const parsedDate = parseDate(todo.dueDate); // Use your parseDate function
-  //   console.log(`Parsed Date:`, parsedDate);
-
-  //   dueDate.innerText = parsedDate
-  //     ? format(parsedDate, "MM/dd/yyyy")
-  //     : "No due date";
-  // } catch (error) {
-  //   console.error("Error formatting date:", error);
-  //   dueDate.innerText = "Error formatting date";
-  // }
-  //---
   mainTodoContents.appendChild(dueDate);
 
   // Description
@@ -397,13 +378,6 @@ const toggleNav = () => {
 const closeNav = () => {
   const menu = document.getElementById("tab-button-container");
   menu.classList.remove("menu-open");
-};
-
-const parseDate = (date) => {
-  // Function will return date whether there is one or not!
-  const [year, month, day] = date.split("-").map(Number);
-  const parsedDate = new Date(year, month - 1, day); // Month is 0-based
-  return parsedDate;
 };
 
 export default {

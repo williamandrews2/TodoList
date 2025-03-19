@@ -299,6 +299,7 @@ textarea {
   }
 
   #sidebar {
+    padding: 0px;
     width: 100vw;
     min-height: 80px;
     align-items: center;
@@ -312,6 +313,7 @@ textarea {
     text-align: center;
     position: absolute;
     top: 80px;
+    width: 100vw;
     opacity: 0;
     max-height: 0; /* Initially collapsed */
     overflow: hidden; /* Prevents content from spilling */
