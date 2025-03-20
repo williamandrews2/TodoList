@@ -62,6 +62,16 @@ const renderTodos = () => {
     todoItemContainer.id = "todo-item-container";
     content.appendChild(todoItemContainer);
 
+    // sort the todos by earliest to latest (default)
+    project.todos.sort((a,b) => {
+      // assign far future date if a todo does not have a due date
+      const dateA = a.dueDate ? parseISO(a.dueDate) : new Date(8640000000000000);
+      const dateB = b.dueDate ? parseISO(b.dueDate) : new Date(8640000000000000);
+
+    return dateA - dateB;
+    })
+
+    // render each todo for this project
     project.todos.forEach((todo, index) => {
       todoItemContainer.appendChild(createTodoElement(todo, index, project));
     });
@@ -137,6 +147,15 @@ const getDashboardTodos = (todoType) => {
 
 const renderTodoSection = (section, todos) => {
   if (todos.length != 0) {
+    // sort the todos by earliest to latest (default)
+    todos.sort((a,b) => {
+      // assign far future date if a todo does not have a due date
+      const dateA = a.dueDate ? parseISO(a.dueDate) : new Date(8640000000000000);
+      const dateB = b.dueDate ? parseISO(b.dueDate) : new Date(8640000000000000);
+
+    return dateA - dateB;
+    })
+
     // create heading (text filled below)
     const heading = document.createElement("h1");
     heading.className = "dashboard-item-heading";
@@ -216,7 +235,7 @@ const addProject = () => {
   form.addEventListener("submit", addNewProject);
 };
 
-const createTodoElement = (todo, index, project = null) => {
+const createTodoElement = (todo, index, project = null) => {  
   // Todo item container
   const todoItem = document.createElement("div");
   todoItem.classList.add("todo-item");

@@ -35,8 +35,6 @@ button,
   flex-direction: column;
 }
 
-#tab-button-container {
-}
 .tab-button {
   width: 100%;
   padding: 1rem 0;
