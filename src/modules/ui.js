@@ -1,5 +1,5 @@
 import projectController from "./projectController";
-import { add, format, isBefore, isAfter, parse, parseISO } from "date-fns";
+import { format, isBefore, isAfter, parseISO } from "date-fns";
 import { isSameDay } from "date-fns";
 import addNewTask from "./addTask";
 import addNewProject from "./addNewProject";
@@ -388,8 +388,7 @@ const createTodoElement = (todo, index, project = null) => {
   return todoItem;
 };
 
-const toggleNav = () => {
-  const hamburger = document.getElementById("hamburger");
+const toggleNav = () => {    
   const menu = document.getElementById("tab-button-container");
   menu.classList.toggle("menu-open");
 };
