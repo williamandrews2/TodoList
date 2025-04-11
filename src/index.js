@@ -4,7 +4,6 @@ import "./checkbox.css";
 
 import projectController from "./modules/projectController";
 import ui from "./modules/ui";
-import createSampleProject from "./modules/sample";
 
 const dashboardButton = document.getElementById("dashboard-btn");
 const projectsButton = document.getElementById("projects-btn");
