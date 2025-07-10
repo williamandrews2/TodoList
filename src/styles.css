@@ -48,11 +48,6 @@ button,
   transition: 0.2s ease-in-out;
 }
 
-.tab-button:hover {
-  background-color: var(--input-color);
-  transition: 0.2s ease-in-out;
-}
-
 #nav-container {
   position: absolute;
   display: none;
@@ -112,10 +107,6 @@ button,
   transition: 0.2s ease-in-out;
 }
 
-#new-project-button:hover {
-  border: 1px solid limegreen;
-}
-
 #add-project-form {
   font-size: var(--font-size-primary);
   padding: 0px var(--indent);
@@ -170,15 +161,6 @@ button,
   border-radius: 10px;
 }
 
-.back-button:hover {
-  background-color: var(--input-highlight);
-  transition: 0.2s ease-in-out;
-}
-
-#delete-project-button:hover {
-  background-color: rgb(173, 3, 3);
-}
-
 #todo-item-container {
   display: flex;
   flex-direction: column;
@@ -200,30 +182,12 @@ button,
   border: 1px solid var(--overdue-color) !important;
 }
 
-.todo-item.overdue-todo-item:hover {
-  border: 1px solid var(--overdue-highlight-color) !important;
-}
-
 .todo-item.high-priority {
   border: 1px solid var(--high-priority);
 }
 
-.todo-item.high-priority:hover {
-  border: 1px solid var(--high-priority-highlight);
-}
-
 .todo-item.medium-priority {
   border: 1px solid var(--medium-priority);
-}
-
-.todo-item.medium-priority:hover {
-  border: 1px solid var(--medium-priority-highlight);
-}
-
-.todo-item:hover,
-.project-list-item:hover {
-  border: 1px solid var(--border-highlight-color);
-  cursor: pointer;
 }
 
 .todo-contents {
@@ -252,11 +216,6 @@ button,
   height: 30px;
   color: gray; /* Change color */
   transition: 0.2s ease-in-out;
-}
-
-.delete-button:hover svg {
-  color: red;
-  transform: scale(1.1);
 }
 
 #add-task-form {
@@ -290,6 +249,51 @@ textarea {
   width: 60%;
 }
 
+/* PC optimization */
+@media (min-width: 768px) {
+  .delete-button:hover svg {
+    color: red;
+    transform: scale(1.1);
+  }
+
+  .todo-item:hover,
+  .project-list-item:hover {
+    border: 1px solid var(--border-highlight-color);
+    cursor: pointer;
+  }
+
+  .todo-item.medium-priority:hover {
+    border: 1px solid var(--medium-priority-highlight);
+  }
+
+  .todo-item.overdue-todo-item:hover {
+    border: 1px solid var(--overdue-highlight-color) !important;
+  }
+
+  .todo-item.high-priority:hover {
+    border: 1px solid var(--high-priority-highlight);
+  }
+
+  .back-button:hover {
+    background-color: var(--input-highlight);
+    transition: 0.2s ease-in-out;
+  }
+
+  #delete-project-button:hover {
+    background-color: rgb(173, 3, 3);
+  }
+
+  #new-project-button:hover {
+    border: 1px solid limegreen;
+  }
+
+  .tab-button:hover {
+    background-color: var(--input-color);
+    transition: 0.2s ease-in-out;
+  }
+}
+
+/* Mobile optimization */
 @media (max-width: 768px) {
   #main-container {
     flex-direction: column;
